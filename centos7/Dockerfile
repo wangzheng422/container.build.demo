@@ -2,10 +2,10 @@ FROM quay.io/baicell/nr5g:latest as NR5G
 
 FROM docker.io/centos:centos7
 
-RUN yum -y install epel-release 
-RUN yum -y update 
-RUN yum -y install net-tools pciutils lksctp-tools iptraf-ng htop vim tcpdump wget bzip2 lrzsz dhcp gcc-c++ libcgroup libedit tuned openssl grub2-tools numa* tuna libhugetlbfs
-RUN yum clean all
+RUN yum -y install epel-release && \
+    yum -y update && \
+    yum -y install net-tools pciutils lksctp-tools iptraf-ng htop vim tcpdump wget bzip2 lrzsz dhcp gcc-c++ libcgroup libedit tuned openssl grub2-tools numa* tuna libhugetlbfs && \
+    yum clean all
 
 COPY --from=NR5G /nr5g_19.10.03.bz2 /home
 RUN cd /home && tar xf nr5g_19.10.03.bz2 
