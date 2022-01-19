@@ -4,7 +4,7 @@ FROM docker.io/centos:centos7
 
 RUN yum -y install epel-release && \
     yum -y update && \
-    yum -y install net-tools pciutils lksctp-tools iptraf-ng htop vim tcpdump wget bzip2 lrzsz dhcp gcc-c++ libcgroup libedit tuned openssl grub2-tools numa* tuna libhugetlbfs && \
+    yum -y install net-tools pciutils lksctp-tools iptraf-ng htop vim tcpdump wget bzip2 lrzsz dhcp gcc-c++ libcgroup libedit tuned openssl grub2-tools numa* tuna libhugetlbfs autogen-libopts ntpdate ntp && \
     yum clean all
 
 COPY --from=NR5G /nr5g_19.10.03.bz2 /home
