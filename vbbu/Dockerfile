@@ -17,8 +17,6 @@ RUN curl -fsSL -o /home/ImageUpgrade ${URL_UPGRADE_SCRIPT}
 RUN cd /home && chmod +x ImageUpgrade && /bin/cp -f ImageUpgrade /bin/ImageUpgrade && \
   bash ImageUpgrade BaiBBU_XSS_1.6.23.IMG --no-preserve 
 
-RUN yum -y clean all && \
-  /bin/rm -f /home/nr5g_19.10.03.bz2 && \
-  /bin/rm -f /home/ImageUpgrade && \
+RUN /bin/rm -f /home/ImageUpgrade && \
   /bin/rm -f /home/BaiBBU_XSS_1.6.23.IMG
 
