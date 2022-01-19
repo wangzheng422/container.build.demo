@@ -1,5 +1,4 @@
-[![ci](https://github.com/wangzheng422/container.build.demo/actions/workflows/main.yml/badge.svg)](https://github.com/wangzheng422/container.build.demo/actions/workflows/main.yml)
-
+[![ci](https://github.com/wangzheng422/container.build.demo/actions/workflows/main.yml/badge.svg)](https://github.com/wangzheng422/container.build.demo/actions/workflows/main.yml)[![CI FPGA](https://github.com/wangzheng422/container.build.demo/actions/workflows/fpga.yml/badge.svg)](https://github.com/wangzheng422/container.build.demo/actions/workflows/fpga.yml)
 # container build demo
 
 ## large file
