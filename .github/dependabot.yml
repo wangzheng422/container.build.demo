@@ -1,0 +1,14 @@
+version: 2
+updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+  # Maintain dependencies for docker
+  # https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates
+  # https://dev.to/oracle2025/how-to-keep-a-dockerfile-updated-with-dependabot-1mdn
+  - package-ecosystem: "docker"
+    directory: "/centos7"
+    schedule:
+      interval: "daily"
