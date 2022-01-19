@@ -1,4 +1,4 @@
-name: CI
+name: CI FPGA
 
 on:
   push:
@@ -41,4 +41,4 @@ jobs:
           push: true
           tags: |
             quay.io/baicell/fpga-driver:${{ steps.date.outputs.date }}
-            
+
