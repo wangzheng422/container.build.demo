@@ -37,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: fpga
-          platforms: linux/amd64
+          # platforms: linux/amd64
           push: true
           tags: |
             quay.io/baicell/fpga-driver:v${{ steps.date.outputs.date }}
