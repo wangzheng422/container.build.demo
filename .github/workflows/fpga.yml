@@ -40,5 +40,5 @@ jobs:
           # platforms: linux/amd64
           push: true
           tags: |
-            quay.io/baicell/fpga-driver:v${{ steps.date.outputs.date }}
+            quay.io/baicell/fpga-driver:${{ steps.date.outputs.date }}
 
