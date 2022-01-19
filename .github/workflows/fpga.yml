@@ -17,8 +17,6 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
-        with:
-          lfs: true
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -40,5 +38,5 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            quay.io/baicell/fpga-driver:${{ steps.date.outputs.date }}
+            quay.io/baicell/fpga-driver:v${{ steps.date.outputs.date }}
 
