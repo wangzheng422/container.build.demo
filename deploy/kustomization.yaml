@@ -1,0 +1,8 @@
+namespace: default
+resources:
+- fpga.driver.yaml
+- net-attach-def.yaml
+- vbbu.deploy.yaml
+- vbbu.service.yaml
+- vbbu.route.yaml
+

@@ -16,6 +16,9 @@ spec:
       labels:
         app: fpga-driver
     spec:
+      hostPID: true
+      # serviceAccount: baicell
+      # serviceAccountName: baicell
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -26,12 +29,18 @@ spec:
                     values:
                     - fpga-driver
               topologyKey: "kubernetes.io/hostname"
-      nodeselector:
-        node-role.kubernetes.io/master: ""
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - worker-0
       # restartPolicy: Never
       initContainers:
       - name: copy
-        image: registry.ocp4.redhat.ren:5443/baicell/fgpa-driver:v04
+        image: quay.io/baicell/fpga-driver:20220120-0844
         command: ["/bin/sh", "-c", "tar zvxf /BaiBBU_DXSS_1.0.18--4.18.0-305.19.1.PKG --strip 1 -C /baicell/driver/ && /bin/cp -f /ocp4.install.sh /baicell/driver/ "]
         imagePullPolicy: Always
         volumeMounts:
@@ -49,7 +58,9 @@ spec:
             memory: 20Mi
         securityContext:
           privileged: true
-          runAsUser: 0
+          # runAsUser: 0
+          seLinuxOptions:
+            level: "s0"
         volumeMounts:
         - name: driver-files
           mountPath: /baicell/driver/
