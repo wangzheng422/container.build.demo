@@ -12,4 +12,3 @@ COPY ocp4.install.sh /ocp4.install.sh
 RUN chmod +x /ocp4.install.sh
 
 WORKDIR /
-
