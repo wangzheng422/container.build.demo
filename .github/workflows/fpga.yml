@@ -37,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: fpga
-          file: {context}/driver.Dockerfile
+          file: driver.Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
@@ -71,7 +71,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: fpga
-          file: {context}/set_ip.Dockerfile
+          file: set_ip.Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
