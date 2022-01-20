@@ -1,0 +1,64 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fpga-driver
+  # namespace: default
+  labels:
+    app: fpga-driver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fpga-driver
+  template:
+    metadata:
+      labels:
+        app: fpga-driver
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - fpga-driver
+              topologyKey: "kubernetes.io/hostname"
+      nodeselector:
+        node-role.kubernetes.io/master: ""
+      # restartPolicy: Never
+      initContainers:
+      - name: copy
+        image: registry.ocp4.redhat.ren:5443/baicell/fgpa-driver:v04
+        command: ["/bin/sh", "-c", "tar zvxf /BaiBBU_DXSS_1.0.18--4.18.0-305.19.1.PKG --strip 1 -C /baicell/driver/ && /bin/cp -f /ocp4.install.sh /baicell/driver/ "]
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: driver-files
+          mountPath: /baicell/driver/
+      containers:
+      - name: driver
+        image: registry.redhat.io/rhel8/support-tools:8.4
+        # imagePullPolicy: Always
+        command: [ "/usr/bin/bash","-c","cd /baicell/driver/ && bash ./ocp4.install.sh && sleep infinity " ]
+        # command: [ "/usr/bin/bash","-c","tail -f /dev/null || true " ]
+        resources:
+          requests:
+            cpu: 10m
+            memory: 20Mi
+        securityContext:
+          privileged: true
+          runAsUser: 0
+        volumeMounts:
+        - name: driver-files
+          mountPath: /baicell/driver/
+        - name: host
+          mountPath: /host
+      volumes: 
+      - name: driver-files
+        emptyDir: {}
+      - name: host
+        hostPath:
+          path: /
+          type: Directory
