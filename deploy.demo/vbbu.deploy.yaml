@@ -34,8 +34,6 @@ spec:
                 add:
                 - CAP_SYS_ADMIN
         volumeMounts:
-          - mountPath: /hugepages
-            name: hugepage
           - name: lib-modules
             mountPath: /lib/modules
           - name: src
@@ -45,9 +43,7 @@ spec:
           - name: cache-volume
             mountPath: /dev/shm
           # - name: license-volume
-          #   mountPath: /baicell/lic
-          - name: config
-            mountPath: /baicell          
+          #   mountPath: /baicell/lic    
         resources:
           requests:
             cpu: 1
@@ -56,25 +52,19 @@ spec:
             cpu: 1
             memory: 1Gi
       volumes:
-        - name: hugepage
-          emptyDir:
-            medium: HugePages
         - name: lib-modules
           hostPath:
             path: /lib/modules
         - name: src
           hostPath:
             path: /usr/src
-        - name: config
-          hostPath:
-            path: /var/baicell
         - name: dev
           hostPath:
             path: "/dev"
         - name: cache-volume
           emptyDir:
             medium: Memory
-            sizeLimit: 16Gi
+            sizeLimit: 1Gi
         # - name: license-volume
         #   configMap:
         #     name: license.for.baicell
