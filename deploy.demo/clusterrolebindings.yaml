@@ -1,0 +1,12 @@
+apiVersion: authorization.openshift.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: system:openshift:scc:privileged
+roleRef:
+  name: system:openshift:scc:privileged
+subjects:
+- kind: ServiceAccount
+  name: demo
+  namespace: baicell
+userNames:
+- system:serviceaccount:baicell:demo

@@ -1,0 +1,88 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: du-deployment1
+  namespace: baicell
+  labels:
+    app: du-deployment1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: du-pod1
+  template:
+    metadata:
+      labels:
+        app: du-pod1
+    spec:
+      containers:
+      - name: du-container1
+        image: "quay.io/baicell/fpga-driver:set_ip.v06"
+        imagePullPolicy: IfNotPresent
+        tty: true
+        stdin: true
+        env:
+          - name: duNetProviderDriver
+            value: "host-netdevice"
+        command: ["/usr/sbin/init"]
+        # - sleep
+        # - infinity
+        securityContext:
+            privileged: true
+            capabilities:
+                add:
+                - CAP_SYS_ADMIN
+        volumeMounts:
+          - mountPath: /hugepages
+            name: hugepage
+          - name: lib-modules
+            mountPath: /lib/modules
+          - name: src
+            mountPath: /usr/src
+          - name: dev
+            mountPath: /dev
+          - name: cache-volume
+            mountPath: /dev/shm
+          # - name: license-volume
+          #   mountPath: /baicell/lic
+          - name: config
+            mountPath: /baicell          
+        resources:
+          requests:
+            cpu: 15
+            memory: 64Gi
+            hugepages-1Gi: 16Gi
+          limits:
+            cpu: 15
+            memory: 64Gi
+            hugepages-1Gi: 16Gi
+      volumes:
+        - name: hugepage
+          emptyDir:
+            medium: HugePages
+        - name: lib-modules
+          hostPath:
+            path: /lib/modules
+        - name: src
+          hostPath:
+            path: /usr/src
+        - name: config
+          hostPath:
+            path: /var/baicell
+        - name: dev
+          hostPath:
+            path: "/dev"
+        - name: cache-volume
+          emptyDir:
+            medium: Memory
+            sizeLimit: 16Gi
+        # - name: license-volume
+        #   configMap:
+        #     name: license.for.baicell
+        #     items:
+        #     - key: license
+        #       path: license.lic
+      nodeSelector:
+        node-role.kubernetes.io/worker: ""
+      serviceAccountName: demo

@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: du-http 
+  namespace: baicell
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80 
+    nodePort: 31071
+  type: NodePort 
+  selector:
+    app: du-pod1
