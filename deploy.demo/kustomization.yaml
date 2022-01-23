@@ -1,5 +1,4 @@
 resources:
-  - namespace.yaml
   - sa.yaml
   - clusterrolebindings.yaml
   - vbbu.deploy.yaml
