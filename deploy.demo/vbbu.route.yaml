@@ -3,7 +3,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: du-http 
-  namespace: baicell
+  # namespace: baicell
 spec:
   port:
     targetPort: 80
